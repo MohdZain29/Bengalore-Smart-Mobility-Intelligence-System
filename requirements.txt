@@ -10,3 +10,4 @@ ultralytics==8.4.174
 opencv-python-headless
 torch
 torchvision
+joblib
