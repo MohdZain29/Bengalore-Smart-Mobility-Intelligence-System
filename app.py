@@ -382,14 +382,20 @@ with tab_cctv:
     if not (os.path.exists(WEIGHTS) and os.path.exists(REFP)):
         st.warning("The camera analysis files are missing. Please complete the camera set-up step to enable this tab.")
     else:
-        try:
+               try:
             import vision_utils as vu
+
             @st.cache_resource
             def load_detector():
-                return vu.load_detector(WEIGHTS), vu.load_reference(REFP)
+                return (
+                    vu.load_detector(WEIGHTS),
+                    vu.load_reference(REFP)
+                )
+
             det, ref = load_detector()
             vision_ok = True
-       except Exception as e:
+
+        except Exception as e:
             st.error(
                 f"Camera initialization failed: "
                 f"{type(e).__name__}: {e}"
