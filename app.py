@@ -389,7 +389,7 @@ with tab_cctv:
                 return vu.load_detector(WEIGHTS), vu.load_reference(REFP)
             det, ref = load_detector()
             vision_ok = True
-       except Exception as e:
+        except Exception as e:
     st.error(
         f"Camera initialization failed: {type(e).__name__}: {e}"
     )
