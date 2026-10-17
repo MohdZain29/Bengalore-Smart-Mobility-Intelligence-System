@@ -389,8 +389,11 @@ with tab_cctv:
                 return vu.load_detector(WEIGHTS), vu.load_reference(REFP)
             det, ref = load_detector()
             vision_ok = True
-        except Exception:
-            st.error("Camera analysis is not available on this system yet. Please contact the administrator.")
+       except Exception as e:
+    st.error(
+        f"Camera initialization failed: {type(e).__name__}: {e}"
+    )
+    st.exception(e)
     if vision_ok:
         c1, c2, c3 = st.columns([1.3, 1, 1])
         source = c1.radio("Camera source", ["Sample CCTV clip", "Sample frames", "Upload image", "Upload video", "Live stream URL"])
