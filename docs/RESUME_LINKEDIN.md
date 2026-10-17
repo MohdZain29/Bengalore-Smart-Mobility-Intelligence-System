@@ -1,0 +1,15 @@
+# Resume bullets
+* Built an end-to-end ML system on real Bengaluru traffic, weather, road-safety and enforcement data (8.9k road-days, 16 roads): leak-free feature pipeline, time-series cross-validation, tuned gradient-boosting models and SHAP explanations; what-if congestion estimator reached R² 0.97 on a held-out later period (and I showed that traffic volume alone explains R² 0.97 of it, so the model is honest about being volume-driven).
+* Audited and corrected target leakage (mixed forecast horizons and interpolated inputs that inflated R² by about 3x), replacing a random split with a chronological one — and reported the honest forecast ceiling (road average R² 0.18) instead of chasing metrics.
+* Trained a YOLO11 vehicle detector on 14 Bengaluru CCTV vehicle classes (BMD-45; mAP50 0.56) and converted detections into a PCU-weighted visual congestion index, served in the app via image upload, video and live-stream input and fused into the intelligence report.
+* Delivered a severe-congestion alert (AUC 0.72), mobility intelligence (area pressure, hotspots, incident-risk model, road-safety and enforcement analytics) and a deployed Streamlit app with interactive what-if analysis.
+
+# LinkedIn project description
+**Bengaluru Smart Mobility Intelligence** — I combined real Bengaluru traffic, weather, road-crash and traffic-police enforcement data into a decision-support system. Along the way I found that my first model's "good" scores came from data leakage, rebuilt the evaluation chronologically, and learned how much of tomorrow's congestion is genuinely predictable (little — most of it is which road it is). The result: a what-if congestion estimator (R² 0.97), a severe-congestion alert, hotspot and risk analytics, SHAP explanations and a Streamlit app. Computer vision: a YOLO detector on Bengaluru CCTV frames turns live camera views into a congestion signal inside the same app. Tech: Python, scikit-learn, XGBoost/LightGBM/CatBoost, SHAP, PyTorch/Ultralytics YOLO, OpenCV, Plotly, Streamlit.
+
+# Interview talking points
+* **Why is forecast R² low?** Tomorrow's congestion is mostly the road's usual level plus noise; persistence is worse than predicting the average, and calendar and weather add nothing detectable. I verified that rather than adding leaky features.
+* **What leakage did you find?** The old target mixed 1-17 day horizons, and interpolated "today" rows carried tomorrow's value; fixing both cut R² from the inflated range to the real one.
+* **Why is the what-if R² high and is that legitimate?** Evaluated on a later period it generalises, but a volume-only model already reaches R² 0.97: congestion in this data is almost a saturating function of traffic volume. It is a planning estimator, not a forecast, and not a rich multi-factor model.
+* **Why chronological split, why 1-SE rule?** Realistic evaluation and the simplest model that is statistically as good.
+* **Why SHAP?** Direction and magnitude of each driver, validated against permutation importance.
